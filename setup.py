@@ -48,6 +48,11 @@ setup(
     extras_require={
         'dev': dev_requires
     },
+    entry_points={
+        'console_scripts': [
+            'jukebox-serve = jukebox.runserver:cli',
+        ],
+    },
     classifiers=[
         'Programming Language :: Python :: 3.5',
     ]
