@@ -18,7 +18,7 @@ def test_config(tmpdir):
     assert jukebox_config_from_srouce.data['helloworld']['debug']
     toml_file = tmpdir.mkdir('toml').join('fixture.toml')
     toml_file.write(toml_source)
-    path = pathlib.Path(tmpdir.strpath) / 'toml' /  'fixture.toml'
+    path = pathlib.Path(tmpdir.strpath) / 'toml' / 'fixture.toml'
     jukebox_config = TestConfig.from_path(path)
     assert jukebox_config.data == jukebox_config_from_srouce.data
 
@@ -44,6 +44,7 @@ def test_jukebox_config_web_typeerror():
         '''
         jukebox_config = JukeboxConfig.from_source(toml_file)
         assert jukebox_config.web
+
 
 def test_jukebox_config_web_assertionerror():
     with pytest.raises(AssertionError):
