@@ -1,0 +1,15 @@
+language: python
+python:
+  - 3.5
+
+# command to install dependencies
+install:
+  - pip install .
+  - pip install flake8
+  - pip install -e .[dev]
+
+# command to run tests
+script:
+  - flake8
+  - py.test -v
+  - coverage="$(py.test --cov=jukebox | grep TOTAL | awk '{print $4}' | sed "s/%//")"; if [ $coverage -lt 80 ]; then echo "coverage lesser than 80" >&2; fi
