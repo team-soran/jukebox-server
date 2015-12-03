@@ -7,6 +7,8 @@ import types
 import pathlib
 
 import toml
+from sqlalchemy.engine import Engine, create_engine
+from werkzeug.utils import cached_property
 
 
 __all__ = 'Config', 'JukeboxConfig', 'config_property',
@@ -115,3 +117,23 @@ class JukeboxConfig(Config):
         assert 'debug' in config
         assert 'secret_key' in config
         return config
+
+    @config_property
+    def database(self) -> collections.abc.Mapping:
+        """Database configuration
+
+        - (:class:`str`) ``url``
+
+        """
+        config = self.data['database']
+        assert 'url' in config
+        return config
+
+    @cached_property
+    def database_engine(self) -> Engine:
+        engine = create_engine(
+            self.database['url'],
+            encoding=self.database.get('encoding', 'utf-8'),
+            echo=self.database.get('echo', True),
+        )
+        return engine

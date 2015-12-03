@@ -25,6 +25,7 @@ def get_requirements(filename: str) -> types.GeneratorType:
 install_requires = [
     'toml >= 0.9.1, < 1.0.0',
     'flask >= 0.10.1',
+    'sqlalchemy >= 1.0, < 2.0'
 ]
 dev_requires = [
     'pytest >= 2.8.3, < 3.0.0',
