@@ -5,10 +5,15 @@
 import pkgutil
 import sys
 
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 #: (:class:`~sqlalchemy.orm.session.Session`)
 Session = sessionmaker(autocommit=True)
+
+
+#: Construct a base class for declarative class definitions.
+Base = declarative_base()
 
 
 def load_all_modules_from_dir(dirname):
