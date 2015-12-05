@@ -8,10 +8,13 @@ import pathlib
 
 import toml
 from sqlalchemy.engine import Engine, create_engine
+from sqlalchemy.orm.session import Session as SQLAlchemySession
 from werkzeug.utils import cached_property
 
+from .orm import Session
 
-__all__ = 'Config', 'JukeboxConfig', 'config_property',
+
+__all__ = 'Config', 'JukeboxConfig', 'Session', 'config_property',
 
 
 class config_property(object):
