@@ -134,9 +134,28 @@ class JukeboxConfig(Config):
 
     @cached_property
     def database_engine(self) -> Engine:
+        """Create database engine, it is binded to
+        :class:`sqlalchemy.orm.session.Session`
+
+        :return: sqlalchemy engine
+        :rtype: :class:`sqlalchemy.orm.engine.Engine`
+
+        """
         engine = create_engine(
             self.database['url'],
             encoding=self.database.get('encoding', 'utf-8'),
             echo=self.database.get('echo', True),
         )
         return engine
+
+    def create_session(self, bind: Engine=None) -> SQLAlchemySession:
+        """Create sqlalchemy session object, if ``bind`` is ``None``\ ,
+        binding :attr:`~.JukeboxConfig.database_engine`\ .
+
+        :return: a sqlalchemy session
+        :rtype: :class:`sqlalchemy.orm.session.Session`
+
+        """
+        if bind is None:
+            bind = self.database_engine
+        return Session(bind=bind)

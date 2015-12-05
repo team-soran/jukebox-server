@@ -1,6 +1,8 @@
 import pathlib
 import pytest
 
+from sqlalchemy.engine import create_engine
+
 from jukebox.config import Config, JukeboxConfig, config_property
 
 
@@ -131,3 +133,13 @@ def test_jukebox_config_database_engine(fx_config_source):
     expect_url = jukebox_config.database['url']
     assert str(jukebox_config.database_engine.url) == expect_url
     assert jukebox_config.database_engine.echo
+
+
+def test_jukebox_config_create_session(fx_config_source):
+    jukebox_config = JukeboxConfig.from_source(fx_config_source)
+    session = jukebox_config.create_session()
+    assert session.bind == jukebox_config.database_engine
+    other_engine = create_engine('sqlite:///test.db')
+    session = jukebox_config.create_session(other_engine)
+    assert session.bind != jukebox_config.database_engine
+    assert session.bind == other_engine
